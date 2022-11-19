@@ -32,6 +32,14 @@ public class Test {
             	LocalDateTime myDateObj = LocalDateTime.now();
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm:ss");
 		response+=myDateObj.format(myFormatObj)+"\n";
+            } else if (queryMap.get("cmd").equals("rev")) {
+            	String str = queryMap.get("str");
+            	String nstr = "";
+            	for (int i=0; i<str.length(); i++) {
+			char ch= str.charAt(i);
+			nstr= ch+nstr;
+		}
+		response += nstr;
             }
             
             t.sendResponseHeaders(200, response.length());

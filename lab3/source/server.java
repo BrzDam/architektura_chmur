@@ -28,18 +28,9 @@ public class Test {
             String response = "";
             if(queryMap == null) {
             	response += "Hello World from java!\n";
-            } else if (queryMap.get("cmd").equals("time")) {
-            	LocalDateTime myDateObj = LocalDateTime.now();
-		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm:ss");
-		response+=myDateObj.format(myFormatObj)+"\n";
-            } else if (queryMap.get("cmd").equals("rev")) {
+            } else if (queryMap.get("str").length() != 0) {
             	String str = queryMap.get("str");
-            	String nstr = "";
-            	for (int i=0; i<str.length(); i++) {
-			char ch= str.charAt(i);
-			nstr= ch+nstr;
-		}
-		response += nstr;
+		response += analyzeStr(str);
             }
             
             t.sendResponseHeaders(200, response.length());
@@ -66,8 +57,8 @@ public class Test {
 	    return result;
     }
     
-    static public void analyzeStr(String str) {
-        int upper = 0, lower = 0, number = 0, special = 0;
+    static public String analyzeStr(String str) {
+        Integer upper = 0, lower = 0, number = 0, special = 0;
  
         for(int i = 0; i < str.length(); i++)
         {
@@ -86,6 +77,8 @@ public class Test {
         System.out.println("Upper case letters : " + upper);
         System.out.println("Number : " + number);
         System.out.println("Special characters : " + special);
+        
+        return  "{\"lowercase\":" + lower.toString() + ",\"uppercase\":" + upper.toString() + ",\"digits\":" + number.toString() + ",\"special\":" + special.toString() + "}";
     }
 
 }
